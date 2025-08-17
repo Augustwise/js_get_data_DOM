@@ -6,19 +6,24 @@ let totalPopulation = 0;
 const populations = [];
 
 population.forEach((node) => {
-  const value = Number(node.textContent.replace(/,/g, ''));
+  const cleanText = node.textContent.replace(/,/g, '');
 
-  totalPopulation += value;
-  populations.push(value);
+  if (!isNaN(cleanText) && cleanText.trim() !== '') {
+    const value = Number(cleanText);
+
+    totalPopulation += value;
+    populations.push(value);
+  }
 });
 
 const totalPopulationElement = document.querySelector('.total-population');
 
 totalPopulationElement.textContent = totalPopulation.toLocaleString('en-US');
 
-const averagePopulation = totalPopulation / populations.length;
+if (populations.length > 0) {
+  const averagePopulation = totalPopulation / populations.length;
+  const avrgPopulationElement = document.querySelector('.average-population');
 
-const averagePopulationElement = document.querySelector('.average-population');
-
-averagePopulationElement.textContent =
-  Math.round(averagePopulation).toLocaleString('en-US');
+  avrgPopulationElement.textContent =
+    Math.round(averagePopulation).toLocaleString('en-US');
+}
